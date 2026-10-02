@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>French B1 Daily Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: one centred column on Seyès-ruled school paper; a sticky tab bar, then today's checklist as ruled blocks. */
+:root {
+  --paper: #F5F6FA;
+  --card: #FFFFFF;
+  --ink: #17203A;
+  --ink-2: #4F5A78;
+  --rule: #D9DEEE;
+  --grid: rgba(60, 80, 170, .13);
+  --grid-fine: rgba(60, 80, 170, .06);
+  --accent: #2B45B0;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E6EAFA;
+  --red: #C73B2B;
+  --red-soft: #FBE9E6;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #12151F; --card: #1A1F2E; --ink: #E8ECF8; --ink-2: #9EA8C8; --rule: #2C3350;
+    --grid: rgba(140, 160, 255, .10); --grid-fine: rgba(140, 160, 255, .045);
+    --accent: #8CA2FF; --accent-ink: #0F1426; --accent-soft: #232B4A;
+    --red: #FF8B77; --red-soft: #3A2220; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #12151F; --card: #1A1F2E; --ink: #E8ECF8; --ink-2: #9EA8C8; --rule: #2C3350;
+  --grid: rgba(140, 160, 255, .10); --grid-fine: rgba(140, 160, 255, .045);
+  --accent: #8CA2FF; --accent-ink: #0F1426; --accent-soft: #232B4A;
+  --red: #FF8B77; --red-soft: #3A2220; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    linear-gradient(var(--grid-fine) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px, 100% 8px;
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+body::before {
+  content: ""; position: fixed; top: 0; bottom: 0; width: 2px; background: var(--red); opacity: .45;
+  left: max(7px, calc(50vw - 360px + 4px)); pointer-events: none;
+}
+.wrap { width: min(720px, 100%); margin-inline: auto; padding-inline: 16px; }
+
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--rule); }
+.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding-block: 10px; }
+.brand { font-family: var(--f-display); font-weight: 800; font-size: 18px; letter-spacing: -.01em; }
+.brand span { color: var(--accent); }
+.tabs { display: flex; gap: 4px; background: var(--accent-soft); padding: 4px; border-radius: 10px; flex: 1 1 260px; max-width: 360px; }
+.tabs button { flex: 1; border: 0; background: transparent; padding: 8px 10px; border-radius: 7px; font-weight: 600; font-size: 14px; color: var(--ink-2); min-height: 40px; }
+.tabs button[aria-pressed="true"] { background: var(--card); color: var(--accent); box-shadow: 0 1px 2px rgba(20, 30, 80, .15); }
+
+main { padding-block: 22px 40px; display: flex; flex-direction: column; gap: 18px; }
+
+/* hero */
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.tag { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; background: var(--red); color: #fff; }
+.tag.alt { background: var(--accent-soft); color: var(--accent); }
+html[data-theme="dark"] .tag:not(.alt) { color: #1b0f0d; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tag:not(.alt) { color: #1b0f0d; } }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(30px, 7vw, 44px); line-height: 1.05; letter-spacing: -.02em; margin: 6px 0 4px; text-wrap: balance; }
+.sub { color: var(--ink-2); margin: 0; }
+.progress { display: grid; gap: 8px; margin-top: 14px; }
+.bar { height: 10px; border-radius: 99px; background: var(--accent-soft); overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width .25s ease; }
+.pstat { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 14px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.pstat b { color: var(--ink); font-weight: 600; }
+
+.notice { background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--red); border-radius: 8px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; justify-content: space-between; }
+.notice p { margin: 0; flex: 1 1 240px; min-width: 0; }
+.btn { border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); font-weight: 600; padding: 9px 14px; border-radius: 8px; min-height: 40px; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.small { padding: 6px 10px; min-height: 34px; font-size: 14px; }
+
+.focus { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: var(--card); border: 1px solid var(--rule); border-radius: 10px; }
+.focus div { padding: 10px 14px; min-width: 0; }
+.focus div + div { border-left: 1px solid var(--rule); }
+.focus small { display: block; font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.focus span { font-weight: 600; font-size: 15px; line-height: 1.3; display: block; margin-top: 2px; overflow-wrap: anywhere; }
+@media (max-width: 560px) { .focus { grid-template-columns: 1fr; } .focus div + div { border-left: 0; border-top: 1px solid var(--rule); } }
+
+/* blocks and tasks */
+.block { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.bh { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 12px 16px; background: var(--accent-soft); }
+.bh h2 { font-family: var(--f-display); font-weight: 600; font-size: 18px; margin: 0; letter-spacing: -.005em; }
+.bh .meta { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+ul.tasks { list-style: none; margin: 0; padding: 0; }
+.task + .task { border-top: 1px solid var(--rule); }
+.row { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 14px; align-items: start; padding: 14px 16px; cursor: pointer; }
+.row input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.box { width: 26px; height: 26px; border: 2px solid var(--ink-2); border-radius: 7px; background: var(--card); display: grid; place-items: center; margin-top: 1px; transition: background .12s, border-color .12s; }
+.box::after { content: ""; width: 6px; height: 12px; border: solid var(--accent-ink); border-width: 0 3px 3px 0; transform: rotate(45deg) translate(-1px, -1px); opacity: 0; }
+.row input:checked + .box { background: var(--accent); border-color: var(--accent); }
+.row input:checked + .box::after { opacity: 1; }
+.row input:focus-visible + .box { outline: 3px solid var(--accent); outline-offset: 2px; }
+.txt { min-width: 0; display: grid; gap: 2px; }
+.t { font-weight: 600; font-size: 16px; line-height: 1.35; }
+.d { color: var(--ink-2); font-size: 14px; line-height: 1.45; }
+.min { font-family: var(--f-mono); font-size: 13px; color: var(--ink-2); white-space: nowrap; padding-top: 3px; font-variant-numeric: tabular-nums; }
+.task.done .t { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--ink-2); color: var(--ink-2); }
+.task.done .d { opacity: .7; }
+details.pr { padding: 0 16px 14px 58px; }
+details.pr summary { cursor: pointer; font-size: 14px; font-weight: 600; color: var(--accent); width: fit-content; padding: 2px 0; }
+details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--f-body); font-size: 14px; line-height: 1.5; background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 8px 0; }
+@media (max-width: 480px) { details.pr { padding-left: 16px; } .row { gap: 12px; } }
+
+.finish { display: none; margin-top: 0; text-align: center; padding: 22px 16px; background: var(--accent); color: var(--accent-ink); border-radius: 10px; }
+.finish.show { display: block; }
+.finish b { display: block; font-family: var(--f-display); font-size: 24px; font-weight: 800; }
+
+.donebox { display: grid; gap: 8px; background: var(--card); border: 2px solid var(--accent); border-radius: 12px; padding: 16px; }
+.donebox p { margin: 0; font-size: 14px; color: var(--ink-2); }
+.bigbtn { width: 100%; border: 0; background: var(--accent); color: var(--accent-ink); font-family: var(--f-display); font-weight: 800; font-size: 20px; padding: 16px; border-radius: 10px; min-height: 56px; }
+.undo { border-left-color: var(--accent); }
+
+/* week and roadmap */
+.wk-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.wk-head h1 { margin: 0; font-size: clamp(26px, 6vw, 36px); }
+.icon { width: 44px; height: 44px; border: 1px solid var(--rule); background: var(--card); border-radius: 10px; font-size: 20px; line-height: 1; }
+.icon:disabled { opacity: .35; cursor: default; }
+.list { display: grid; gap: 8px; }
+.item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 14px; align-items: center; text-align: left; width: 100%; background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; }
+.item:hover { border-color: var(--accent); }
+.item.now { border-color: var(--red); box-shadow: inset 4px 0 0 var(--red); }
+.item .n { font-family: var(--f-display); font-weight: 600; font-size: 17px; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.item .s { color: var(--ink-2); font-size: 14px; grid-column: 1; min-width: 0; overflow-wrap: anywhere; }
+.item .p { grid-column: 2; grid-row: 1 / span 2; text-align: right; font-family: var(--f-mono); font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums; min-width: 72px; }
+.item .p i { display: block; height: 6px; border-radius: 99px; background: var(--accent-soft); margin-top: 6px; overflow: hidden; }
+.item .p i em { display: block; height: 100%; background: var(--accent); }
+.flag { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--red); border: 1px solid var(--red); border-radius: 99px; padding: 0 7px; }
+
+.settings { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: grid; gap: 12px; }
+.settings h2 { font-family: var(--f-display); font-size: 18px; margin: 0; }
+.settings label { font-size: 14px; color: var(--ink-2); display: grid; gap: 4px; }
+.settings select { font: inherit; padding: 8px 10px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); color: var(--ink); min-height: 40px; width: 100%; }
+.settings .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.settings .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.note { font-size: 13px; color: var(--ink-2); margin: 0; }
+#sync { text-align: center; padding-bottom: 24px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">Plan de <span>français</span></div>
+  <nav class="tabs" aria-label="Views">
+    <button type="button" data-view="today" aria-pressed="true">Today</button>
+    <button type="button" data-view="week" aria-pressed="false">Week</button>
+    <button type="button" data-view="road" aria-pressed="false">12 weeks</button>
+  </nav>
+</div></header>
+<div class="wrap">
+  <main id="app" aria-live="polite"></main>
+  <p class="note" id="sync"></p>
+</div>
+
+<script>
+(function () {
+  var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var DAY_SUMMARY = ['Grammar and listening', 'Listening and speaking', 'Writing and listening', 'Reading and speaking', 'Speaking and listening', 'Speaking, writing and reading', 'Mock test, drill and review'];
+  /* [grammar topic, writing task, speaking topic, what the grammar topic means] */
+  var ROAD = [
+    ['Passé composé (avoir / être)', 'Describe your day yesterday', 'Ma journée', 'Talk about finished actions in the past. Use avoir or être in the present, then the past participle: j’ai mangé, j’ai fait. Movement and reflexive verbs use être: elle est allée, je me suis levé.'],
+    ['Passé composé vs imparfait', 'Tell a story about last weekend', 'Mon week-end dernier', 'Passé composé is for events that happened and finished: hier, j’ai joué au padel. Imparfait is for the background, habits and descriptions: il faisait beau, je jouais souvent.'],
+    ['Object pronouns: le / la / les', 'Describe a friend or family member', 'Ma famille et mes amis', 'Replace a noun you already mentioned. Je vois le film → Je le vois. The pronoun goes before the verb. In passé composé it goes before avoir: Je l’ai vu.'],
+    ['Object pronouns: lui / leur, and their order', 'Message declining an invitation', 'Mon travail', 'Replace “à + person”. Je parle à Marie → Je lui parle. Je parle à mes amis → Je leur parle. With two pronouns: Je le lui donne.'],
+    ['en and y', 'Email asking for information', 'Ma ville', 'en replaces de + noun or a quantity: J’en veux deux. y replaces à or dans + a place or thing: J’y vais.'],
+    ['Prepositions and articles: à, de, chez, jouer à, faire du', 'Describe a place you visited', 'Un voyage', 'chez = at someone’s place (chez mon ami). jouer à + sport (jouer au padel). faire du / de la + activity (faire du sport). à + l’ before a vowel (à l’université).'],
+    ['Relative pronouns: qui, que, où, dont', 'Describe a restaurant or a dish you like', 'Mon plat préféré', 'They join two sentences. qui = the subject (un restaurant qui s’appelle…). que = the object (le plat que j’aime). où = place or time. dont = de + noun (le plat dont je parle).'],
+    ['Futur simple and futur proche', 'Your plans for next year', 'Mes projets', 'Futur proche: aller + infinitive for plans and the near future (je vais manger). Futur simple: infinitive + ai, as, a, ons, ez, ont (je mangerai).'],
+    ['Consolidation: pronouns and prepositions in one text; polite requests (je voudrais, pourriez-vous)', 'Short formal request letter', 'Ce que je voudrais améliorer', 'No new rule. Use the pronouns and prepositions from weeks 3 to 6 in one text. Polite requests: je voudrais + infinitive, pourriez-vous + infinitive ?'],
+    ['Comparatif, superlatif and connectors (mais, donc, pourtant)', 'Opinion paragraph: for and against', 'Le télétravail : pour ou contre ?', 'Compare: plus / moins / aussi + adjective + que. Superlative: le plus / la plus + adjective. Connectors: mais (but), donc (so), pourtant (and yet).'],
+    ['Tense consistency: passé composé, imparfait and futur in one text', 'Opinion text with 3 arguments and correct tenses', 'Les réseaux sociaux', 'Pick the tense for each sentence and keep it: passé composé for events, imparfait for background, futur for what comes next. Do not drift from one tense to another in a story.'],
+    ['Mixed review, timed', 'Two timed tasks (exam format)', 'Pourquoi j’apprends le français', 'No new rule. Mix everything from weeks 1 to 11, under time pressure.']
+  ];
+  var CHECK = { 1: 'Placement test', 6: 'Full mock test', 12: 'Final mock test' };
+
+  /* ---------- state ---------- */
+  var LS = 'french-b1-plan-v2';
+  var S = { cur: 5, done: {}, ts: 0 };   /* cur = index of the current day, 0 to 83 (0 = Sunday of week 1) */
+  try { var r0 = JSON.parse(localStorage.getItem(LS)); if (r0 && r0.done) { if (typeof r0.cur === 'number') S.cur = r0.cur; S.done = r0.done; S.ts = r0.ts || 0; } } catch (e) {}
+  var view = 'today';
+  var sel = { w: 1, d: 0 };
+  var syncState = 'local';
+  var dbRef = null, saveTimer = null, saving = false, dirty = false, resetArmed = false, prevCur = null;
+
+  function wOf(i) { return Math.floor(i / 7) + 1; }
+  function dOf(i) { return i % 7; }
+  function idxOf(w, d) { return (w - 1) * 7 + d; }
+  function resetSel() { sel = { w: wOf(S.cur), d: dOf(S.cur) }; }
+  function fmin(m) { if (m >= 60) { var h = Math.floor(m / 60), r = m % 60; return h + ' h' + (r ? ' ' + String(r).padStart(2, '0') : ''); } return m + ' min'; }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  /* ---------- the plan ---------- */
+  function prompt(kind, w) {
+    var R = ROAD[w - 1];
+    var lvl = 'I am learning French, level A2 moving to B1. ';
+    if (kind === 'explain') return lvl + 'Explain this grammar topic simply: ' + R[0] + '. Give the rule in 3 short lines, then 5 short example sentences with English translations. After that, ask me 3 quick questions to check I understood.';
+    if (kind === 'grammar') return lvl + 'This week’s topic is: ' + R[0] + '. Here are 8 sentences I wrote: [paste your 8 sentences]. Be strict. For each one, say if it is correct. If not, give the corrected version and explain the rule in one simple sentence. Then give me 5 more exercises on the same rule, without the answers.';
+    if (kind === 'writing') return lvl + 'Here is a text I wrote in 20 minutes: [paste your text]. Correct every mistake, even small ones. Show my version, the corrected version, and a one-line reason for each change. At the end, list my 3 most frequent mistakes. Ignore missing accents, I will add them later.';
+    if (kind === 'speaking') return 'Be my French conversation partner. My level is A2 moving to B1. Today’s topic is: ' + R[2] + '. Use short, simple sentences and ask me one question at a time. Speak clearly and a little slowly. Do not correct me during the conversation. After every 5 exchanges, give me at most 2 corrections, focused on tenses and pronouns. Stay in French unless I say ‘English’.';
+    if (kind === 'reading') return 'Here is a short article in French: [paste the article]. Ask me 3 questions about it in French. After I answer, correct my French and tell me if I understood it correctly.';
+    return 'List the mistakes I made in this conversation, grouped by type (tense, pronouns, prepositions, agreement). Put the 3 most important first, and write one corrected example sentence for each.';
+  }
+  function T(id, m, t, d, p) { return { id: id, m: m, t: t, d: d || '', p: p || '' }; }
+  function habit(w) {
+    return { name: 'Daily habit', tasks: [
+      T('h1', 10, 'Shadow your current set of 5 phrases', 'Say each phrase out loud, copying a recording. 7-day cycle: copy (days 1 to 4), swap words (day 5), make your own (day 6), review (day 7). Record yourself on days 3 and 7.'),
+      T('h2', 5, 'Talk to yourself in French about “' + ROAD[w - 1][2] + '”', 'Alone, out loud, no one answering and no recording. Say anything you can about the topic, for 5 minutes. If you do not know a word, say it another way and keep going. This is a warm-up for the conversation with Claude later in the week.')
+    ] };
+  }
+  var cache = {};
+  function buildDay(w, d) {
+    var key = w + '.' + d; if (cache[key]) return cache[key];
+    var R = ROAD[w - 1], g = R[0], wr = R[1], sp = R[2], B = [];
+    if (d <= 4) B.push(habit(w));
+    if (d === 0) {
+      B.push({ name: 'Grammar', tasks: [
+        T('g1', 10, 'Learn this week’s grammar topic, then say 5 example sentences out loud', 'Topic: ' + g + '. ' + R[3] + ' Open the matching lesson in Grammaire progressive du français (niveau intermédiaire), or ask Claude to explain it.', 'explain'),
+        T('g2', 20, 'Do the exercises on this topic, on paper', 'Do not look at the answers while you work. Then check with the answer key.'),
+        T('g3', 10, 'Write 8 sentences about your own life using this topic'),
+        T('g4', 10, 'Send your 8 sentences to Claude for correction', 'Write every mistake in the error log.', 'grammar')
+      ] });
+      B.push({ name: 'Listening', tasks: [ T('l1', 25, 'One TV5MONDE EDU video with its exercises (A2 or B1)', 'Watch with French subtitles, then do the exercises.') ] });
+    } else if (d === 1) {
+      B.push({ name: 'Listening', tasks: [
+        T('l1', 15, 'InnerFrench episode, first listen with no transcript', 'Note what you understood in 3 sentences.'),
+        T('l2', 15, 'Second listen, with the transcript', 'Underline the words you missed.'),
+        T('l3', 10, 'Dictation', 'Replay one minute, pause often, write what you hear, then compare.'),
+        T('l4', 5, 'Shadow 3 sentences from the episode, out loud'),
+        T('l5', 5, 'Write a 3-sentence summary in French')
+      ] });
+      B.push({ name: 'Speaking', tasks: [
+        T('s1', 15, 'Voice mode with Claude on the topic “' + sp + '”', '', 'speaking'),
+        T('s2', 10, 'Record yourself for 2 minutes on the same topic', 'Recording is only 2 of the 10 minutes. Record 2 min, listen back 2 min, write down one thing to fix (1 min), record again 2 min using that fix, then listen once more (3 min).')
+      ] });
+    } else if (d === 2) {
+      B.push({ name: 'Writing', tasks: [
+        T('w1', 5, 'Read today’s writing task and plan 3 to 4 points', 'Task: ' + wr + '. Choose the tense before you start.'),
+        T('w2', 20, 'Write timed, with no translator: 8 to 10 sentences', 'Deliberately use the grammar topic: ' + g),
+        T('w3', 5, 'Self-check', 'Tenses, mon/ma/mes, gender and agreement, je vais + verb, apostrophes before vowels.'),
+        T('w4', 5, 'Send your text to Claude for correction', '', 'writing'),
+        T('w5', 10, 'Rewrite the corrected text from memory, then compare'),
+        T('w6', 5, 'Read the clean version out loud', 'Add your mistakes to the error log.')
+      ] });
+      B.push({ name: 'Listening', tasks: [ T('l1', 25, 'RFI Journal en français facile', 'Listen once, then again with the transcript if available. Write 3 new words with example sentences in your notebook.') ] });
+    } else if (d === 3) {
+      B.push({ name: 'Reading', tasks: [
+        T('r1', 15, 'Read one short article once, without a dictionary', 'Write 2 sentences on the main idea.'),
+        T('r2', 10, 'Read it again', 'Underline unknown words and look up at most 8 that matter.'),
+        T('r3', 15, 'Write a 5-sentence summary in French, in your own words'),
+        T('r4', 5, 'Answer: what do you think? (3 sentences)'),
+        T('r5', 5, 'Read your summary out loud as if telling a friend')
+      ] });
+      B.push({ name: 'Speaking', tasks: [ T('s1', 25, 'Voice mode: tell Claude about the article you read', 'Let it ask you questions in French. Practice the new words.', 'reading') ] });
+    } else if (d === 4) {
+      B.push({ name: 'Speaking', tasks: [
+        T('s1', 25, 'Voice mode conversation with Claude', 'Topic: ' + sp + '. Push-to-talk if you have it.', 'speaking'),
+        T('s2', 10, 'Switch to text in the same chat and ask for your recurring mistakes', 'Add them to the error log.', 'recap'),
+        T('s3', 10, 'Record 2 minutes on the topic “' + sp + '”, then record it again', 'Recording is about 4 of the 10 minutes. Record 2 min, listen back and find 2 mistakes (3 min), record again 2 min using the corrections from Claude, listen once more (3 min).'),
+        T('s4', 5, 'Listen to your first and last recordings', 'Pick one fix for next week.')
+      ] });
+      B.push({ name: 'Listening', tasks: [ T('l1', 25, 'A second InnerFrench episode or a TV5MONDE EDU video, at normal speed', 'Two listens. Do not stop for words the first time.') ] });
+    } else if (d === 5) {
+      B.push(habit(w));
+      B.push({ name: 'Speaking', tasks: [
+        T('s1', 25, 'Voice mode conversation with Claude', 'Topic: ' + sp, 'speaking'),
+        T('s2', 15, 'Record 2 minutes on the topic “' + sp + '”, listen back, then record it again', 'Recording is about 4 of the 15 minutes. Record 2 min, listen back and write down your 3 biggest mistakes (5 min), record again 2 min fixing them, listen to both and compare (4 min), add the mistakes to the error log (2 min).')
+      ] });
+      B.push({ name: 'Listening', tasks: [ T('l1', 20, 'A TV5MONDE EDU video or an InnerFrench episode', 'Two listens, then read the transcript.') ] });
+      B.push({ name: 'Writing', tasks: [
+        T('w1', 30, 'The longer weekend task: 12 to 15 sentences', 'Task: ' + wr + '. Timed, no translator, using the grammar topic: ' + g),
+        T('w2', 15, 'Send it to Claude, then rewrite the corrected version from memory', '', 'writing')
+      ] });
+      B.push({ name: 'Reading', tasks: [ T('r1', 30, 'One longer article', 'Write a 6-sentence summary and say it out loud. Claude can quiz you on it.', 'reading') ] });
+      B.push({ name: 'Error log', tasks: [ T('e1', 30, 'Error log: recap the week’s mistakes, then practise the top 3', 'Claude’s recap takes about 2 min. The rest is your own work. Ask Claude for the recap (2 min), add each mistake to the log with the correct version and the rule (8 min), add 1 to “times repeated” for any mistake you made again (2 min), cover the “what I wrote” column and say or write the correct version from memory (8 min), then write 5 new sentences using your top 3 mistake patterns and send them to Claude (10 min).', 'recap') ] });
+    } else {
+      var mock;
+      if (w === 1) mock = T('m1', 50, 'Placement test, all four skills', 'Alliance Française Jeddah offers one, and TV5MONDE has free online tests. This shows your real starting level and your weakest skill.');
+      else if (w === 6) mock = T('m1', 50, 'Full mock test in one sitting', 'Is your weakest skill improving? Adjust today’s drill and the weeks ahead.');
+      else if (w === 12) mock = T('m1', 50, 'Final mock test, same format as week 6', 'Aim for about one error per sentence or better in writing, past tense, no stopping. In speaking, 3 minutes without freezing.');
+      else if (w % 2 === 1) mock = T('m1', 50, 'Mock A: listening and reading, timed', 'TV5MONDE or official TCF/TEF samples.');
+      else mock = T('m1', 50, 'Mock B: writing and speaking, timed', 'Two short texts, then a 3 to 5 minute spoken answer.');
+      B.push(habit(w));
+      B.push({ name: 'Mock test', tasks: [
+        mock,
+        T('m2', 35, 'Review every mistake from the mock', 'Find the pattern behind each one (grammar, vocabulary, speed) and write it in the error log.')
+      ] });
+      B.push({ name: 'Drill and speak', tasks: [
+        T('d1', 30, 'Drill your weakest skill from this week', '30 focused minutes on it, nothing else.'),
+        T('d2', 20, 'Free conversation in voice mode, any topic', 'Stay in French even if you stumble.', 'speaking')
+      ] });
+      B.push({ name: 'Listening and weekly review', tasks: [
+        T('l1', 20, 'Listening for enjoyment', 'A French YouTube channel, series or podcast at your level. No pausing, no notes.'),
+        T('z1', 10, 'Weekly review', 'Reread the error log, cross out what you have mastered, and choose next week’s focus.')
+      ] });
+    }
+    var total = 0, count = 0;
+    B.forEach(function (b) { b.min = 0; b.tasks.forEach(function (t) { b.min += t.m; total += t.m; count++; }); });
+    var out = { blocks: B, total: total, count: count };
+    cache[key] = out; return out;
+  }
+  function kOf(w, d, id) { return w + '.' + d + '.' + id; }
+  function dayProgress(w, d) {
+    var day = buildDay(w, d), done = 0;
+    day.blocks.forEach(function (b) { b.tasks.forEach(function (t) { if (S.done[kOf(w, d, t.id)]) done++; }); });
+    return { done: done, count: day.count, total: day.total };
+  }
+  function weekProgress(w) {
+    var done = 0, count = 0;
+    for (var d = 0; d < 7; d++) { var p = dayProgress(w, d); done += p.done; count += p.count; }
+    return { done: done, count: count, pct: count ? Math.round(done * 100 / count) : 0 };
+  }
+
+  /* ---------- persistence ---------- */
+  function renderSync() {
+    var el = document.getElementById('sync'); if (!el) return;
+    el.textContent = syncState === 'saved' ? 'Your progress is saved to your account and follows you across devices.' : 'Your progress is saved on this device.';
+  }
+  function persist() {
+    S.ts = Date.now();
+    try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) {}
+    dirty = true; clearTimeout(saveTimer); saveTimer = setTimeout(flush, 700);
+  }
+  function flush() {
+    if (!dbRef) return;
+    if (saving) { saveTimer = setTimeout(flush, 400); return; }
+    saving = true; dirty = false;
+    dbRef.set({ cur: S.cur, done: S.done, ts: S.ts }).then(function () { syncState = 'saved'; }, function () { syncState = 'local'; }).then(function () {
+      saving = false; renderSync(); if (dirty) flush();
+    });
+  }
+  function connect() {
+    if (!window.claude || !window.claude.use) return;
+    Promise.all([window.claude.use('db'), window.claude.use('user')]).then(function (res) {
+      var db = res[0], user = res[1]; if (!db || !user) return null;
+      return user.id().then(function (id) {
+        if (!id) return;
+        dbRef = db.doc('data/users/' + id + '/progress');
+        dbRef.onSnapshot(function (snap) {
+          if (snap.metadata && snap.metadata.hasPendingWrites) return;
+          syncState = 'saved';
+          if (snap.exists) {
+            var r = snap.data() || {};
+            if ((r.ts || 0) > S.ts) {
+              if (typeof r.cur === 'number') S.cur = r.cur;
+              S.done = Object.assign({}, r.done || {}); S.ts = r.ts;
+              try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) {}
+              cache = {}; resetSel(); render();
+            } else if ((r.ts || 0) < S.ts) { flush(); }
+          } else if (S.ts > 0) { flush(); }
+          renderSync();
+        }, function () { syncState = 'local'; renderSync(); });
+      });
+    }).catch(function () {});
+  }
+
+  /* ---------- rendering ---------- */
+  var app = document.getElementById('app');
+
+  function taskHTML(w, d, t) {
+    var k = kOf(w, d, t.id), on = !!S.done[k];
+    var pr = t.p ? '<details class="pr"><summary>Prompt for Claude</summary><pre>' + esc(prompt(t.p, w)) + '</pre><button type="button" class="btn small ghost" data-copy="1">Copy prompt</button></details>' : '';
+    return '<li class="task' + (on ? ' done' : '') + '" data-m="' + t.m + '">' +
+      '<label class="row"><input type="checkbox" data-k="' + k + '"' + (on ? ' checked' : '') + '><span class="box" aria-hidden="true"></span>' +
+      '<span class="txt"><span class="t">' + esc(t.t) + '</span>' + (t.d ? '<span class="d">' + esc(t.d) + '</span>' : '') + '</span>' +
+      '<span class="min">' + t.m + ' min</span></label>' + pr + '</li>';
+  }
+  function focusHTML(w) {
+    var R = ROAD[w - 1];
+    return '<div class="focus"><div><small>Grammar topic</small><span>' + esc(R[0]) + '</span></div><div><small>Writing task</small><span>' + esc(R[1]) + '</span></div><div><small>Speaking topic</small><span>' + esc(R[2]) + '</span></div></div>';
+  }
+  function curLabel() { return DAYS[dOf(S.cur)] + ', week ' + wOf(S.cur); }
+
+  function renderToday() {
+    var w = sel.w, d = sel.d, day = buildDay(w, d), idx = idxOf(w, d), isCur = idx === S.cur;
+    var h = '';
+    if (isCur && prevCur !== null) {
+      h += '<div class="notice undo"><p><b>' + DAYS[dOf(prevCur)] + ' (week ' + wOf(prevCur) + ') is marked done.</b> This is your new current day.</p><button type="button" class="btn small ghost" data-act="undo">Undo</button></div>';
+    }
+    if (!isCur) {
+      h += '<div class="notice"><p><b>This is not your current day.</b> Your current day is ' + curLabel() + '.</p><span style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn small" data-act="gocur">Go to my current day</button><button type="button" class="btn small ghost" data-act="makecur">Make this my current day</button></span></div>';
+    }
+    h += '<header><div class="eyebrow">' + (isCur ? '<span class="tag">Current day</span>' : '<span class="tag alt">Viewing</span>') + '<span>Week ' + w + ' of 12</span><span>Day ' + (idx + 1) + ' of 84</span></div>' +
+      '<h1>' + DAYS[d] + '</h1><p class="sub">' + DAY_SUMMARY[d] + ' · ' + fmin(day.total) + ' in total</p>' +
+      '<div class="progress"><div class="bar"><i id="pfill"></i></div><div class="pstat"><span id="pcount"></span><span id="pleft"></span></div></div></header>' + focusHTML(w);
+    day.blocks.forEach(function (b) {
+      h += '<section class="block" data-block><div class="bh"><h2>' + esc(b.name) + '</h2><span class="meta"><span class="bc"></span> · ' + fmin(b.min) + '</span></div><ul class="tasks">';
+      b.tasks.forEach(function (t) { h += taskHTML(w, d, t); });
+      h += '</ul></section>';
+    });
+    h += '<div class="finish" id="finish"><b>C’est fait pour aujourd’hui.</b>Everything for this day is ticked. Press the button below to move on.</div>';
+    if (isCur) {
+      var last = idx >= 83, nextName = last ? '' : DAYS[dOf(idx + 1)];
+      h += '<div class="donebox"><button type="button" class="bigbtn" data-act="daydone">' + (last ? 'Day is done · finish the plan' : 'Day is done · next: ' + nextName) + '</button><p id="donehint"></p></div>';
+    }
+    app.innerHTML = h;
+    refreshProgress();
+  }
+
+  function refreshProgress() {
+    var tasks = app.querySelectorAll('.task'); if (!tasks.length) return;
+    var done = 0, left = 0;
+    tasks.forEach(function (li) {
+      var on = li.querySelector('input').checked, m = +li.getAttribute('data-m');
+      li.classList.toggle('done', on); if (on) done++; else left += m;
+    });
+    app.querySelectorAll('[data-block]').forEach(function (b) {
+      var ts = b.querySelectorAll('.task'), n = 0;
+      ts.forEach(function (li) { if (li.querySelector('input').checked) n++; });
+      b.querySelector('.bc').textContent = n + '/' + ts.length;
+    });
+    var pf = document.getElementById('pfill'); if (pf) pf.style.width = Math.round(done * 100 / tasks.length) + '%';
+    var pc = document.getElementById('pcount'); if (pc) pc.innerHTML = '<b>' + done + ' of ' + tasks.length + '</b> tasks done';
+    var pl = document.getElementById('pleft'); if (pl) pl.innerHTML = done === tasks.length ? '<b>Nothing left</b>' : '<b>' + fmin(left) + '</b> left';
+    var fin = document.getElementById('finish'); if (fin) fin.classList.toggle('show', done === tasks.length);
+    var hint = document.getElementById('donehint');
+    if (hint) hint.textContent = done === tasks.length ? 'All tasks are ticked.' : (tasks.length - done) + ' task' + (tasks.length - done === 1 ? ' is' : 's are') + ' not ticked yet. You can still press the button; they stay unticked.';
+  }
+
+  function renderWeek() {
+    var w = sel.w, wp = weekProgress(w), curW = wOf(S.cur);
+    var h = '<div class="wk-head"><button type="button" class="icon" data-wk="-1" aria-label="Previous week"' + (w > 1 ? '' : ' disabled') + '>‹</button>' +
+      '<div style="text-align:center;min-width:0"><div class="eyebrow" style="justify-content:center">' + (w === curW ? 'Current week' : 'Viewing') + (CHECK[w] ? ' · ' + CHECK[w] : '') + '</div><h1>Week ' + w + ' of 12</h1></div>' +
+      '<button type="button" class="icon" data-wk="1" aria-label="Next week"' + (w < 12 ? '' : ' disabled') + '>›</button></div>' +
+      '<div class="progress" style="margin-top:0"><div class="bar"><i style="width:' + wp.pct + '%"></i></div><div class="pstat"><span><b>' + wp.done + ' of ' + wp.count + '</b> tasks done</span><span><b>' + wp.pct + '%</b></span></div></div>' + focusHTML(w) + '<div class="list">';
+    for (var d = 0; d < 7; d++) {
+      var p = dayProgress(w, d), isNow = idxOf(w, d) === S.cur, pct = Math.round(p.done * 100 / p.count);
+      h += '<button type="button" class="item' + (isNow ? ' now' : '') + '" data-go="' + w + '.' + d + '"><span class="n">' + DAYS[d] + (isNow ? ' <span class="tag">Current day</span>' : '') + '</span>' +
+        '<span class="s">' + DAY_SUMMARY[d] + ' · ' + fmin(p.total) + '</span>' +
+        '<span class="p">' + p.done + '/' + p.count + '<i><em style="width:' + pct + '%"></em></i></span></button>';
+    }
+    h += '</div>';
+    app.innerHTML = h;
+  }
+
+  function renderRoad() {
+    var curW = wOf(S.cur);
+    var h = '<header><div class="eyebrow"><span>Cycle 1</span><span>A2 → B1</span></div><h1>The 12 weeks</h1><p class="sub">About 13.5 hours a week. Tap a week to open it.</p></header><div class="list">';
+    for (var w = 1; w <= 12; w++) {
+      var R = ROAD[w - 1], wp = weekProgress(w), isNow = curW === w;
+      h += '<button type="button" class="item' + (isNow ? ' now' : '') + '" data-week="' + w + '"><span class="n">Week ' + w + (isNow ? ' <span class="tag">Now</span>' : '') + (CHECK[w] ? ' <span class="flag">' + CHECK[w] + '</span>' : '') + '</span>' +
+        '<span class="s">' + esc(R[0]) + '<br>' + esc(R[1]) + ' · ' + esc(R[2]) + '</span>' +
+        '<span class="p">' + wp.pct + '%<i><em style="width:' + wp.pct + '%"></em></i></span></button>';
+    }
+    var wo = '', dofs = '';
+    for (var i = 1; i <= 12; i++) wo += '<option value="' + i + '"' + (i === curW ? ' selected' : '') + '>Week ' + i + '</option>';
+    for (var j = 0; j < 7; j++) dofs += '<option value="' + j + '"' + (j === dOf(S.cur) ? ' selected' : '') + '>' + DAYS[j] + '</option>';
+    h += '</div><section class="settings"><h2>Where you are</h2><p class="note">Your current day is <b>' + curLabel() + '</b>. It only moves when you press “Day is done”. If you need to jump somewhere else, set it here.</p>' +
+      '<div class="two"><label for="set-week">Week<select id="set-week">' + wo + '</select></label><label for="set-day">Day<select id="set-day">' + dofs + '</select></label></div>' +
+      '<div class="acts"><button type="button" class="btn small" data-act="setcur">Set as current day</button><button type="button" class="btn small ghost" data-act="reset">' + (resetArmed ? 'Tap again to clear all ticks' : 'Clear all ticks') + '</button></div></section>';
+    app.innerHTML = h;
+  }
+
+  function render() {
+    document.querySelectorAll('.tabs button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-view') === view ? 'true' : 'false'); });
+    if (view === 'today') renderToday(); else if (view === 'week') renderWeek(); else renderRoad();
+    renderSync();
+  }
+  function go(w, d) { sel = { w: w, d: d }; view = 'today'; render(); window.scrollTo(0, 0); }
+
+  /* ---------- events ---------- */
+  document.querySelector('.tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-view]'); if (!b) return;
+    var v = b.getAttribute('data-view');
+    if (v === 'today') resetSel(); else if (v === 'week' && view !== 'today') { /* keep sel */ } else if (v === 'week') { sel = { w: sel.w, d: sel.d }; }
+    view = v; resetArmed = false; prevCur = null; render(); window.scrollTo(0, 0);
+  });
+  app.addEventListener('change', function (e) {
+    var i = e.target;
+    if (i.matches && i.matches('input[data-k]')) {
+      if (i.checked) S.done[i.getAttribute('data-k')] = 1; else delete S.done[i.getAttribute('data-k')];
+      persist(); refreshProgress();
+    }
+  });
+  app.addEventListener('click', function (e) {
+    var t = e.target;
+    var c = t.closest('[data-copy]');
+    if (c) {
+      var pre = c.parentNode.querySelector('pre');
+      var done = function () { c.textContent = 'Copied'; setTimeout(function () { c.textContent = 'Copy prompt'; }, 1600); };
+      var fallback = function () { var rg = document.createRange(); rg.selectNodeContents(pre); var s = window.getSelection(); s.removeAllRanges(); s.addRange(rg); c.textContent = 'Press Ctrl+C to copy'; };
+      try { navigator.clipboard.writeText(pre.textContent).then(done, fallback); } catch (err) { fallback(); }
+      return;
+    }
+    var wk = t.closest('[data-wk]');
+    if (wk) { sel = { w: sel.w + (+wk.getAttribute('data-wk')), d: 0 }; render(); return; }
+    var g = t.closest('[data-go]');
+    if (g) { var p = g.getAttribute('data-go').split('.'); go(+p[0], +p[1]); return; }
+    var wkRow = t.closest('[data-week]');
+    if (wkRow) { sel = { w: +wkRow.getAttribute('data-week'), d: 0 }; view = 'week'; render(); window.scrollTo(0, 0); return; }
+    var a = t.closest('[data-act]');
+    if (a) {
+      var act = a.getAttribute('data-act');
+      if (act === 'gocur') { resetSel(); render(); window.scrollTo(0, 0); }
+      else if (act === 'makecur') { S.cur = idxOf(sel.w, sel.d); persist(); render(); window.scrollTo(0, 0); }
+      else if (act === 'daydone') { prevCur = S.cur; S.cur = Math.min(83, S.cur + 1); persist(); resetSel(); render(); window.scrollTo(0, 0); }
+      else if (act === 'undo') { if (prevCur !== null) { S.cur = prevCur; prevCur = null; persist(); resetSel(); render(); window.scrollTo(0, 0); } }
+      else if (act === 'setcur') {
+        var wv = +document.getElementById('set-week').value, dv = +document.getElementById('set-day').value;
+        S.cur = idxOf(wv, dv); persist(); resetSel(); view = 'today'; render(); window.scrollTo(0, 0);
+      }
+      else if (act === 'reset') {
+        if (!resetArmed) { resetArmed = true; render(); setTimeout(function () { if (resetArmed) { resetArmed = false; if (view === 'road') render(); } }, 4000); }
+        else { resetArmed = false; S.done = {}; persist(); render(); }
+      }
+    }
+  });
+
+  resetSel(); render(); connect();
+})();
+</script>
+
+</body>
+</html>
