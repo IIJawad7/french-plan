@@ -286,14 +286,14 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
         T('s3', 10, 'Record 2 minutes on the topic “' + sp + '”, then record it again', 'Recording is about 4 of the 10 minutes. Record 2 min, listen back and find 2 mistakes (3 min), record again 2 min using the corrections from Claude, listen once more (3 min).'),
         T('s4', 5, 'Listen to your first and last recordings', 'Pick one fix for next week.')
       ] });
-      B.push({ name: 'Listening', tasks: [ T('l1', 25, 'A second InnerFrench episode or a TV5MONDE EDU video, at normal speed', 'Two listens. Do not stop for words the first time.') ] });
+      B.push({ name: 'Listening', tasks: [ T('l1', 25, 'A second InnerFrench episode section or a TV5MONDE EDU video, at normal speed', 'In this order. 1) Listen with no transcript and do not stop for words you miss (7 min). 2) Read the transcript on its own, with no audio, and underline the words you missed (8 min). 3) Listen again while following the transcript (7 min). 4) Write 3 new words, each with an example sentence (3 min).') ] });
     } else if (d === 5) {
       B.push(habit(w));
       B.push({ name: 'Speaking', tasks: [
         T('s1', 25, 'Voice mode conversation with Claude', 'Topic: ' + sp, 'speaking'),
         T('s2', 15, 'Record 2 minutes on the topic “' + sp + '”, listen back, then record it again', 'Recording is about 4 of the 15 minutes. Record 2 min, listen back and write down your 3 biggest mistakes (5 min), record again 2 min fixing them, listen to both and compare (4 min), add the mistakes to the error log (2 min).')
       ] });
-      B.push({ name: 'Listening', tasks: [ T('l1', 20, 'A TV5MONDE EDU video or an InnerFrench episode', 'Two listens, then read the transcript.') ] });
+      B.push({ name: 'Listening', tasks: [ T('l1', 20, 'One TV5MONDE EDU video, or a 5-minute section of an InnerFrench episode', 'In this order. 1) Listen with no transcript (5 min), then say what you understood in 2 sentences (1 min). 2) Read the transcript on its own, with no audio, and underline the words you missed (5 min). 3) Listen again while following the transcript (6 min). 4) Write 3 new words, each with an example sentence (3 min).') ] });
       B.push({ name: 'Writing', tasks: [
         T('w1', 30, 'The longer weekend task: 12 to 15 sentences', 'Task: ' + wr + '. Timed, no translator, using the grammar topic: ' + g),
         T('w2', 15, 'Send it to Claude, then rewrite the corrected version from memory', '', 'writing')
