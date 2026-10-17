@@ -238,18 +238,13 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
   }
   /* Vocabulary has two parts. 1) The flashcard deck (french-flashcards-nclc7.html on Jawad's PC): 10 new sentences a day
      Sunday to Thursday, reviews every day. 2) A notebook for words met in listening and reading: 3 a day, tested on Saturday. */
-  var CARDS_HOW = 'Open french-flashcards-nclc7.html (it is in your Cursor folder), always in the same browser so your progress is kept. For each sentence: listen, say it out loud, say what it means in English, then press Show answer and rate it honestly. Choose Again if you could not say the meaning or could not repeat the sentence without reading it.';
   function cardsBlock(w, d) {
-    if (d >= 5) return { name: 'Flashcards', tasks: [
-      T('v1', 10, 'Flashcards: reviews only, no new sentences today', CARDS_HOW + ' Stop when the queue is empty. Friday and Saturday are review-only on purpose, so the week’s sentences settle before the next set.')
-    ] };
+    if (d >= 5) return { name: 'Flashcards', tasks: [ T('v1', 10, 'Flashcards: reviews only') ] };
     if (w === 1 && d === 0) return { name: 'Flashcards', tasks: [
-      T('v0', 5, 'Set up: bookmark your flashcard file and start a word notebook', 'Open french-flashcards-nclc7.html in the browser you will always use, and check that the French voice plays. Start a notebook with one dated page per day. Each word goes on the left with its article (le, la, un, une), the English on the right, and a sentence of your own under it. Add a page at the back called “hard words”.'),
-      T('v1', 10, 'Flashcards: your first 10 new sentences', CARDS_HOW + ' Each card is labelled with the week and topic, so you can see how it connects to this week’s grammar.')
+      T('v0', 5, 'Set up: open french-flashcards-nclc7.html and start a word notebook', 'Use the same browser every time so your progress is kept. In the notebook, write each word with its article, the English, and a sentence of your own. Add a “hard words” page at the back.'),
+      T('v1', 10, 'Flashcards: your first 10 new sentences')
     ] };
-    return { name: 'Flashcards', tasks: [
-      T('v1', 15, 'Flashcards: your 10 new sentences, then your reviews', CARDS_HOW + ' New sentences follow the plan, so this week’s grammar comes first. Stop when the queue is empty.')
-    ] };
+    return { name: 'Flashcards', tasks: [ T('v1', 15, 'Flashcards: 10 new sentences + reviews') ] };
   }
   function captureWords(src) {
     return { name: 'Words', tasks: [
