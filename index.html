@@ -232,25 +232,33 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
   function T(id, m, t, d, p) { return { id: id, m: m, t: t, d: d || '', p: p || '' }; }
   function habit(w) {
     return { name: 'Daily habit', tasks: [
-      T('h1', 13, 'Shadow your current set of 5 phrases', 'Say each phrase out loud, copying a recording. 7-day cycle: copy (days 1 to 4), swap words (day 5), make your own (day 6), review (day 7). Record yourself on days 3 and 7.'),
+      T('h1', 13, 'Shadow your current set of 5 phrases', 'Say each phrase out loud, copying a recording. Take your 5 phrases from this week’s flashcards, the ones that are hardest to say. 7-day cycle: copy (days 1 to 4), swap words (day 5), make your own (day 6), review (day 7). Record yourself on days 3 and 7.'),
       T('h2', 2, 'Talk to yourself in French about “' + ROAD[w - 1][2] + '”', 'Alone, out loud, no one answering and no recording. Say anything you can about the topic, for 2 minutes. If you do not know a word, say it another way and keep going. This is a warm-up for the conversation with Claude later in the week.')
     ] };
   }
-  /* Word notebook: add 5 words Sunday to Thursday, review pages from 1, 3 and 7 days ago every day, use them Friday, test them Saturday. */
-  function wordsBlock(w, d) {
-    if (d === 6) return { name: 'Words', tasks: [
-      T('v3', 15, 'Weekly word test', 'Cover the French side of this week’s pages. Say or write each French word with its article from the English (about 12 min). Words you miss go on the “hard words” page at the back; test that page too, and cross a word out once you get it right twice in a row (about 3 min).')
+  /* Vocabulary has two parts. 1) The flashcard deck (french-flashcards-nclc7.html on Jawad's PC): 10 new sentences a day
+     Sunday to Thursday, reviews every day. 2) A notebook for words met in listening and reading: 3 a day, tested on Saturday. */
+  var CARDS_HOW = 'Open french-flashcards-nclc7.html (it is in your Cursor folder), always in the same browser so your progress is kept. For each sentence: listen, say it out loud, say what it means in English, then press Show answer and rate it honestly. Choose Again if you could not say the meaning or could not repeat the sentence without reading it.';
+  function cardsBlock(w, d) {
+    if (d >= 5) return { name: 'Flashcards', tasks: [
+      T('v1', 10, 'Flashcards: reviews only, no new sentences today', CARDS_HOW + ' Stop when the queue is empty. Friday and Saturday are review-only on purpose, so the week’s sentences settle before the next set.')
     ] };
-    if (w === 1 && d === 0) return { name: 'Words', tasks: [
-      T('v1', 5, 'Set up your word notebook', 'One dated page a day. Each word goes on the left with its article (le, la, un, une), the English on the right, and a sentence of your own under it. Add a page at the back called “hard words”. Every new word from this plan goes in this notebook.')
+    if (w === 1 && d === 0) return { name: 'Flashcards', tasks: [
+      T('v0', 5, 'Set up: bookmark your flashcard file and start a word notebook', 'Open french-flashcards-nclc7.html in the browser you will always use, and check that the French voice plays. Start a notebook with one dated page per day. Each word goes on the left with its article (le, la, un, une), the English on the right, and a sentence of your own under it. Add a page at the back called “hard words”.'),
+      T('v1', 10, 'Flashcards: your first 10 new sentences', CARDS_HOW + ' Each card is labelled with the week and topic, so you can see how it connects to this week’s grammar.')
     ] };
-    return { name: 'Words', tasks: [
-      T('v1', 5, 'Word review: the pages from 1, 3 and 7 days ago', 'Cover the French side. Read the English, say the French word with its article out loud, then check. Skip any page that does not exist yet (Friday and Saturday have no new page).')
+    return { name: 'Flashcards', tasks: [
+      T('v1', 15, 'Flashcards: your 10 new sentences, then your reviews', CARDS_HOW + ' New sentences follow the plan, so this week’s grammar comes first. Stop when the queue is empty.')
     ] };
   }
-  function newWords(src) {
-    return { name: 'New words', tasks: [
-      T('v2', 8, 'Add 5 new words to your notebook', 'Choose them from ' + src + ': words or short phrases you want to use yourself, verbs and phrases before rare nouns. For each one, write the word with its article, the English, and a sentence of your own about your life (not copied from the text).')
+  function captureWords(src) {
+    return { name: 'Words', tasks: [
+      T('v2', 4, 'Notebook: add 3 words you met today', 'Choose them from ' + src + ': words you would really use, verbs and phrases before rare nouns. Write each word with its article, the English, and a sentence of your own about your life.')
+    ] };
+  }
+  function notebookTest() {
+    return { name: 'Words', tasks: [
+      T('v3', 8, 'Notebook test: this week’s words', 'Cover the French side of this week’s pages (about 15 words) and say each word with its article from the English (about 5 min). Words you miss go on the “hard words” page at the back. Test last week’s hard words too, and cross a word out once you get it right twice in a row (about 3 min).')
     ] };
   }
   var cache = {};
@@ -258,64 +266,64 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
     var key = w + '.' + d; if (cache[key]) return cache[key];
     var R = ROAD[w - 1], g = R[0], wr = R[1], sp = R[2], B = [];
     B.push(habit(w));
-    B.push(wordsBlock(w, d));
+    B.push(cardsBlock(w, d));
     if (d === 0) {
       B.push({ name: 'Grammar', tasks: [
         T('g1', 10, 'Learn this week’s grammar topic, then say 5 example sentences out loud', 'Topic: ' + g + '. ' + R[3] + ' Open the matching lesson in Grammaire progressive du français (niveau intermédiaire), or ask Claude to explain it.', 'explain'),
-        T('g2', 25, 'Do the exercises on this topic, on paper', 'Do not look at the answers while you work. Then check with the answer key.'),
+        T('g2', 21, 'Do the exercises on this topic, on paper', 'Do not look at the answers while you work. Then check with the answer key.'),
         T('g3', 15, 'Write 8 sentences about your own life using this topic'),
         T('g4', 10, 'Send your 8 sentences to Claude for correction', 'Write every mistake in the error log.', 'grammar'),
         T('g5', 5, 'Rewrite the sentences you got wrong, from memory', 'Cover the corrected version, write each of those sentences again, then compare.')
       ] });
       B.push({ name: 'Listening', tasks: [
         T('l1', 20, 'One TV5MONDE EDU video with its exercises (A2 or B1)', 'Watch with French subtitles, then do the exercises.'),
-        T('l2', 7, 'Replay the hardest minute with no subtitles, then shadow it out loud')
+        T('l2', 5, 'Replay the hardest minute with no subtitles, then shadow it out loud')
       ] });
-      B.push(newWords('today’s video'));
+      B.push(captureWords('today’s video'));
     } else if (d === 1) {
       B.push({ name: 'Listening', tasks: [
         T('l1', 15, 'InnerFrench episode, first listen with no transcript', 'Pick an episode of about 10 to 15 minutes. Note what you understood in 3 sentences.'),
         T('l2', 15, 'Second listen, with the transcript', 'Underline the words you missed.'),
-        T('l3', 15, 'Dictation', 'Replay one minute, pause often, write what you hear, then compare.'),
+        T('l3', 12, 'Dictation', 'Replay one minute, pause often, write what you hear, then compare.'),
         T('l4', 5, 'Shadow 3 sentences from the episode, out loud'),
         T('l5', 5, 'Write a 3-sentence summary in French')
       ] });
-      B.push(newWords('the episode'));
+      B.push(captureWords('the episode'));
       B.push({ name: 'Speaking', tasks: [
-        T('s1', 20, 'Voice mode with Claude on the topic “' + sp + '”', '', 'speaking'),
+        T('s1', 17, 'Voice mode with Claude on the topic “' + sp + '”', '', 'speaking'),
         T('s2', 10, 'Record yourself for 2 minutes on the same topic', 'Recording is only 4 of the 10 minutes. Record 2 min, listen back 2 min, write down one thing to fix (1 min), record again 2 min using that fix, then listen once more (3 min).'),
         T('s3', 7, 'Tell Claude about the episode you just heard', 'In French, in your own words. Let it ask you a question or two.')
       ] });
     } else if (d === 2) {
       B.push({ name: 'Writing', tasks: [
         T('w1', 5, 'Read today’s writing task and plan 3 to 4 points', 'Task: ' + wr + '. Choose the tense before you start.'),
-        T('w2', 25, 'Write timed, with no translator: 10 to 12 sentences', 'Deliberately use the grammar topic: ' + g + '. Try to work in 3 words from your notebook pages.'),
+        T('w2', 22, 'Write timed, with no translator: 10 to 12 sentences', 'Deliberately use the grammar topic: ' + g + '. Try to work in 2 sentence patterns from this week’s flashcards.'),
         T('w3', 5, 'Self-check', 'Tenses, mon/ma/mes, gender and agreement, je vais + verb, apostrophes before vowels.'),
         T('w4', 8, 'Send your text to Claude for correction', 'Then read through every correction and the reason for it.', 'writing'),
-        T('w5', 15, 'Rewrite the corrected text from memory, then compare'),
+        T('w5', 12, 'Rewrite the corrected text from memory, then compare'),
         T('w6', 5, 'Read the clean version out loud', 'Add your mistakes to the error log.'),
         T('w7', 7, 'Write 3 new sentences using the patterns you just corrected')
       ] });
       B.push({ name: 'Listening', tasks: [
         T('l1', 22, 'RFI Journal en français facile', 'Listen once, then again with the transcript if available.')
       ] });
-      B.push(newWords('the audio'));
+      B.push(captureWords('the audio'));
     } else if (d === 3) {
       B.push({ name: 'Reading', tasks: [
         T('r1', 15, 'Read one short article once, without a dictionary', 'Write 2 sentences on the main idea.'),
         T('r2', 12, 'Read it again', 'Underline unknown words and look up at most 8 that matter.'),
-        T('r3', 15, 'Write a 5-sentence summary in French, in your own words'),
+        T('r3', 13, 'Write a 5-sentence summary in French, in your own words'),
         T('r4', 8, 'Answer: what do you think? (3 sentences)'),
         T('r5', 2, 'Read your summary out loud as if telling a friend')
       ] });
-      B.push(newWords('the article'));
+      B.push(captureWords('the article'));
       B.push({ name: 'Speaking', tasks: [
-        T('s1', 30, 'Voice mode: tell Claude about the article you read', 'Let it ask you questions in French. Practice the new words.', 'reading'),
+        T('s1', 26, 'Voice mode: tell Claude about the article you read', 'Let it ask you questions in French. Practice the new words.', 'reading'),
         T('s2', 10, 'Record yourself retelling the article for 2 minutes', 'Record 2 min, listen back 2 min, write down one thing to fix (1 min), record again 2 min using that fix, then listen once more (3 min).')
       ] });
     } else if (d === 4) {
       B.push({ name: 'Speaking', tasks: [
-        T('s1', 30, 'Voice mode conversation with Claude', 'Topic: ' + sp + '. Push-to-talk if you have it. Try to use at least 5 words from this week’s notebook pages.', 'speaking'),
+        T('s1', 26, 'Voice mode conversation with Claude', 'Topic: ' + sp + '. Push-to-talk if you have it. Try to use at least 3 sentences or patterns from this week’s flashcards.', 'speaking'),
         T('s2', 10, 'Switch to text in the same chat and ask for your recurring mistakes', 'Add them to the error log.', 'recap'),
         T('s3', 10, 'Record 2 minutes on the topic “' + sp + '”, then record it again', 'Recording is about 4 of the 10 minutes. Record 2 min, listen back and find 2 mistakes (3 min), record again 2 min using the corrections from Claude, listen once more (3 min).'),
         T('s4', 5, 'Listen to your first and last recordings', 'Pick one fix for next week.')
@@ -323,21 +331,22 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
       B.push({ name: 'Listening', tasks: [
         T('l1', 22, 'A second InnerFrench episode section or a TV5MONDE EDU video, at normal speed', 'In this order. 1) Listen with no transcript and do not stop for words you miss (7 min). 2) Read the transcript on its own, with no audio, and underline the words you missed (8 min). 3) Listen again while following the transcript (7 min).'),
         T('l2', 5, 'Shadow 5 sentences from today’s audio, out loud'),
-        T('l3', 10, 'Write a 4-sentence summary of it in French, from memory')
+        T('l3', 8, 'Write a 4-sentence summary of it in French, from memory')
       ] });
-      B.push(newWords('today’s audio'));
+      B.push(captureWords('today’s audio'));
     } else if (d === 5) {
       B.push({ name: 'Speaking', tasks: [
-        T('s1', 15, 'Voice mode conversation with Claude', 'Topic: ' + sp + '. Try to use words from this week’s notebook pages.', 'speaking'),
+        T('s1', 12, 'Voice mode conversation with Claude', 'Topic: ' + sp + '. Try to use patterns from this week’s flashcards.', 'speaking'),
         T('s2', 10, 'Record 2 minutes on the topic “' + sp + '”, listen back, then record it again', 'Recording is about 4 of the 10 minutes. Record 2 min, listen back and write down your 3 biggest mistakes (3 min), record again 2 min fixing them, listen to both and compare (2 min), add the mistakes to the error log (1 min).')
       ] });
       B.push({ name: 'Writing', tasks: [
-        T('w1', 20, 'Write this week’s task again from a blank page: 8 to 10 sentences', 'Task: ' + wr + '. Do not look at Tuesday’s corrected text. Timed, no translator, using the grammar topic: ' + g + '. Use at least 5 words from this week’s notebook pages.'),
+        T('w1', 18, 'Write this week’s task again from a blank page: 8 to 10 sentences', 'Task: ' + wr + '. Do not look at Tuesday’s corrected text. Timed, no translator, using the grammar topic: ' + g + '. Use at least 3 sentence patterns from this week’s flashcards and 3 words from your notebook.'),
         T('w2', 15, 'Send it to Claude, then rewrite the sentences you got wrong from memory', 'Read each correction first (send and read: about 6 min), then rewrite (about 9 min).', 'writing')
       ] });
       B.push({ name: 'Reading', tasks: [ T('r1', 20, 'One longer article, then say the summary out loud', 'Read it once without a dictionary (about 15 min), then say a 5-sentence summary out loud, with no writing (about 5 min). Claude can quiz you on it.', 'reading') ] });
       B.push({ name: 'Error log', tasks: [ T('e1', 20, 'Error log: recap the week’s mistakes, then practise the top 3', 'Claude’s recap takes about 2 min. The rest is your own work. Ask Claude for the recap (2 min), add each mistake to the log with the correct version and the rule (5 min), add 1 to “times repeated” for any mistake you made again (1 min), cover the “what I wrote” column and say or write the correct version from memory (6 min), then write 3 new sentences using your top 3 mistake patterns and send them to Claude (6 min).', 'recap') ] });
     } else {
+      B.push(notebookTest());
       var mock;
       if (w === 1) mock = T('m1', 65, 'Placement test, all four skills', 'Allow about 65 minutes. Alliance Française Jeddah offers one, and TV5MONDE has free online tests. This shows your real starting level and your weakest skill.');
       else if (w === 6) mock = T('m1', 65, 'Full mock test in one sitting', 'About 65 minutes, a timed slice of each skill. Is your weakest skill improving? Adjust the weeks ahead.');
@@ -346,7 +355,7 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
       else mock = T('m1', 50, 'Mock B: writing and speaking, timed', 'Two short texts (about 20 minutes each), then a 3 to 5 minute spoken answer.');
       B.push({ name: 'Mock test', tasks: [
         mock,
-        T('m2', 25, 'Review every mistake from the mock', 'Find the pattern behind each one (grammar, vocabulary, speed) and write it in the error log. Then cross out anything in the log you now have mastered and choose next week’s focus.')
+        T('m2', 22, 'Review every mistake from the mock', 'Find the pattern behind each one (grammar, vocabulary, speed) and write it in the error log. Then cross out anything in the log you now have mastered and choose next week’s focus.')
       ] });
       /* checkpoint weeks have a longer mock, so no separate drill: the review decides next week's focus */
       if (!CHECK[w]) B.push({ name: 'Drill', tasks: [ T('d1', 15, 'Drill your weakest skill from this week', '15 focused minutes on it, nothing else.') ] });
@@ -502,7 +511,7 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
     var wo = '', dofs = '';
     for (var i = 1; i <= 12; i++) wo += '<option value="' + i + '"' + (i === curW ? ' selected' : '') + '>Week ' + i + '</option>';
     for (var j = 0; j < 7; j++) dofs += '<option value="' + j + '"' + (j === dOf(S.cur) ? ' selected' : '') + '>' + DAYS[j] + '</option>';
-    h += '</div><section class="settings"><h2>How the words work</h2><p class="note">Sunday to Thursday you add 5 new words to your notebook from that day’s audio or reading, each with its article and a sentence of your own. Every day starts with a 5-minute review of the pages from 1, 3 and 7 days ago. Friday you use the words in your speaking and writing. Saturday is a test, and the words you miss go on a “hard words” page that comes back in the next test. That is about 25 new words a week, 300 over the 12 weeks.</p></section><section class="settings"><h2>Where you are</h2><p class="note">Your current day is <b>' + curLabel() + '</b>. It only moves when you press “Day is done”. If you need to jump somewhere else, set it here.</p>' +
+    h += '</div><section class="settings"><h2>How the vocabulary works</h2><p class="note">Your deck, french-flashcards-nclc7.html, has 600 sentences in 12 weekly sets that follow this plan: week 3 is object pronouns, week 7 is relative pronouns, and so on. Sunday to Thursday you learn 10 new sentences a day and review the older ones. Friday and Saturday are reviews only. For each card, listen, say it out loud, say the English, then rate it honestly. Separately, you add 3 words a day from your listening and reading to a notebook, and you test them on Saturday. That is about 50 new sentences and 15 new words a week.</p></section><section class="settings"><h2>Where you are</h2><p class="note">Your current day is <b>' + curLabel() + '</b>. It only moves when you press “Day is done”. If you need to jump somewhere else, set it here.</p>' +
       '<div class="two"><label for="set-week">Week<select id="set-week">' + wo + '</select></label><label for="set-day">Day<select id="set-day">' + dofs + '</select></label></div>' +
       '<div class="acts"><button type="button" class="btn small" data-act="setcur">Set as current day</button><button type="button" class="btn small ghost" data-act="reset">' + (resetArmed ? 'Tap again to clear all ticks' : 'Clear all ticks') + '</button></div></section>';
     app.innerHTML = h;
