@@ -210,6 +210,7 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
   var syncState = 'local';
   var dbRef = null, saveTimer = null, saving = false, dirty = false, resetArmed = false, prevCur = null;
 
+  function daySummary(w, d) { return d === 6 && CHECK[w] ? 'Mock test and review' : DAY_SUMMARY[d]; }
   function wOf(i) { return Math.floor(i / 7) + 1; }
   function dOf(i) { return i % 7; }
   function idxOf(w, d) { return (w - 1) * 7 + d; }
@@ -244,9 +245,9 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
       B.push({ name: 'Grammar', tasks: [
         T('g1', 10, 'Learn this week’s grammar topic, then say 5 example sentences out loud', 'Topic: ' + g + '. ' + R[3] + ' Open the matching lesson in Grammaire progressive du français (niveau intermédiaire), or ask Claude to explain it.', 'explain'),
         T('g2', 25, 'Do the exercises on this topic, on paper', 'Do not look at the answers while you work. Then check with the answer key.'),
-        T('g3', 10, 'Write 8 sentences about your own life using this topic'),
+        T('g3', 15, 'Write 8 sentences about your own life using this topic'),
         T('g4', 10, 'Send your 8 sentences to Claude for correction', 'Write every mistake in the error log.', 'grammar'),
-        T('g5', 10, 'Rewrite the corrected sentences from memory, then compare', 'Cover the corrected version, write each sentence again, and check which ones you still get wrong.')
+        T('g5', 5, 'Rewrite the sentences you got wrong, from memory', 'Cover the corrected version, write each of those sentences again, then compare.')
       ] });
       B.push({ name: 'Listening', tasks: [
         T('l1', 25, 'One TV5MONDE EDU video with its exercises (A2 or B1)', 'Watch with French subtitles, then do the exercises.'),
@@ -255,15 +256,15 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
       ] });
     } else if (d === 1) {
       B.push({ name: 'Listening', tasks: [
-        T('l1', 15, 'InnerFrench episode, first listen with no transcript', 'Note what you understood in 3 sentences.'),
+        T('l1', 15, 'InnerFrench episode, first listen with no transcript', 'Pick an episode of about 10 to 15 minutes. Note what you understood in 3 sentences.'),
         T('l2', 15, 'Second listen, with the transcript', 'Underline the words you missed.'),
-        T('l3', 10, 'Dictation', 'Replay one minute, pause often, write what you hear, then compare.'),
+        T('l3', 15, 'Dictation', 'Replay one minute, pause often, write what you hear, then compare.'),
         T('l4', 5, 'Shadow 3 sentences from the episode, out loud'),
         T('l5', 5, 'Write a 3-sentence summary in French'),
         T('l6', 10, 'Pick 5 new words or expressions from the episode', 'Say each one in a sentence of your own.')
       ] });
       B.push({ name: 'Speaking', tasks: [
-        T('s1', 25, 'Voice mode with Claude on the topic “' + sp + '”', '', 'speaking'),
+        T('s1', 20, 'Voice mode with Claude on the topic “' + sp + '”', '', 'speaking'),
         T('s2', 10, 'Record yourself for 2 minutes on the same topic', 'Recording is only 4 of the 10 minutes. Record 2 min, listen back 2 min, write down one thing to fix (1 min), record again 2 min using that fix, then listen once more (3 min).'),
         T('s3', 10, 'Tell Claude about the episode you just heard', 'In French, in your own words. Let it ask you a question or two.')
       ] });
@@ -272,22 +273,22 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
         T('w1', 5, 'Read today’s writing task and plan 3 to 4 points', 'Task: ' + wr + '. Choose the tense before you start.'),
         T('w2', 25, 'Write timed, with no translator: 10 to 12 sentences', 'Deliberately use the grammar topic: ' + g),
         T('w3', 5, 'Self-check', 'Tenses, mon/ma/mes, gender and agreement, je vais + verb, apostrophes before vowels.'),
-        T('w4', 5, 'Send your text to Claude for correction', '', 'writing'),
+        T('w4', 8, 'Send your text to Claude for correction', 'Then read through every correction and the reason for it.', 'writing'),
         T('w5', 15, 'Rewrite the corrected text from memory, then compare'),
         T('w6', 5, 'Read the clean version out loud', 'Add your mistakes to the error log.'),
-        T('w7', 5, 'Write 3 new sentences using the patterns you just corrected')
+        T('w7', 7, 'Write 3 new sentences using the patterns you just corrected')
       ] });
       B.push({ name: 'Listening', tasks: [
         T('l1', 25, 'RFI Journal en français facile', 'Listen once, then again with the transcript if available. Write 3 new words with example sentences in your notebook.'),
-        T('l2', 15, 'Shadow 5 sentences from the audio, out loud', 'Pick the ones you found hardest to follow.')
+        T('l2', 10, 'Shadow 5 sentences from the audio, out loud', 'Pick the ones you found hardest to follow.')
       ] });
     } else if (d === 3) {
       B.push({ name: 'Reading', tasks: [
         T('r1', 15, 'Read one short article once, without a dictionary', 'Write 2 sentences on the main idea.'),
         T('r2', 10, 'Read it again', 'Underline unknown words and look up at most 8 that matter.'),
         T('r3', 15, 'Write a 5-sentence summary in French, in your own words'),
-        T('r4', 5, 'Answer: what do you think? (3 sentences)'),
-        T('r5', 5, 'Read your summary out loud as if telling a friend'),
+        T('r4', 8, 'Answer: what do you think? (3 sentences)'),
+        T('r5', 2, 'Read your summary out loud as if telling a friend'),
         T('r6', 10, 'Pick 5 useful expressions from the article', 'Use each one in a new sentence of your own.')
       ] });
       B.push({ name: 'Speaking', tasks: [
@@ -313,27 +314,28 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
         T('s2', 10, 'Record 2 minutes on the topic “' + sp + '”, listen back, then record it again', 'Recording is about 4 of the 10 minutes. Record 2 min, listen back and write down your 3 biggest mistakes (3 min), record again 2 min fixing them, listen to both and compare (2 min), add the mistakes to the error log (1 min).')
       ] });
       B.push({ name: 'Writing', tasks: [
-        T('w1', 25, 'The longer weekend task: 10 to 12 sentences', 'Task: ' + wr + '. Timed, no translator, using the grammar topic: ' + g),
-        T('w2', 10, 'Send it to Claude, then rewrite the corrected version from memory', '', 'writing')
+        T('w1', 20, 'Write this week’s task again from a blank page: 8 to 10 sentences', 'Task: ' + wr + '. Do not look at Tuesday’s corrected text. Timed, no translator, using the grammar topic: ' + g),
+        T('w2', 15, 'Send it to Claude, then rewrite the sentences you got wrong from memory', 'Read each correction first (send and read: about 6 min), then rewrite (about 9 min).', 'writing')
       ] });
-      B.push({ name: 'Reading', tasks: [ T('r1', 20, 'One longer article', 'Write a 5-sentence summary and say it out loud. Claude can quiz you on it.', 'reading') ] });
+      B.push({ name: 'Reading', tasks: [ T('r1', 20, 'One longer article, then say the summary out loud', 'Read it once without a dictionary (about 15 min), then say a 5-sentence summary out loud, with no writing (about 5 min). Claude can quiz you on it.', 'reading') ] });
       B.push({ name: 'Error log', tasks: [ T('e1', 20, 'Error log: recap the week’s mistakes, then practise the top 3', 'Claude’s recap takes about 2 min. The rest is your own work. Ask Claude for the recap (2 min), add each mistake to the log with the correct version and the rule (5 min), add 1 to “times repeated” for any mistake you made again (1 min), cover the “what I wrote” column and say or write the correct version from memory (6 min), then write 3 new sentences using your top 3 mistake patterns and send them to Claude (6 min).', 'recap') ] });
     } else {
       var mock;
-      if (w === 1) mock = T('m1', 50, 'Placement test, all four skills', 'Alliance Française Jeddah offers one, and TV5MONDE has free online tests. This shows your real starting level and your weakest skill.');
-      else if (w === 6) mock = T('m1', 50, 'Full mock test in one sitting', 'Is your weakest skill improving? Adjust today’s drill and the weeks ahead.');
-      else if (w === 12) mock = T('m1', 50, 'Final mock test, same format as week 6', 'Aim for about one error per sentence or better in writing, past tense, no stopping. In speaking, 3 minutes without freezing.');
-      else if (w % 2 === 1) mock = T('m1', 50, 'Mock A: listening and reading, timed', 'TV5MONDE or official TCF/TEF samples.');
-      else mock = T('m1', 50, 'Mock B: writing and speaking, timed', 'Two short texts, then a 3 to 5 minute spoken answer.');
+      if (w === 1) mock = T('m1', 70, 'Placement test, all four skills', 'Allow about 70 minutes. Alliance Française Jeddah offers one, and TV5MONDE has free online tests. This shows your real starting level and your weakest skill.');
+      else if (w === 6) mock = T('m1', 70, 'Full mock test in one sitting', 'About 70 minutes, a timed slice of each skill. Is your weakest skill improving? Adjust the weeks ahead.');
+      else if (w === 12) mock = T('m1', 70, 'Final mock test, same format as week 6', 'About 70 minutes. Aim for about one error per sentence or better in writing, past tense, no stopping. In speaking, 3 minutes without freezing.');
+      else if (w % 2 === 1) mock = T('m1', 50, 'Mock A: listening and reading, timed', 'TV5MONDE or official TCF/TEF samples. About 20 minutes of listening, then 30 of reading.');
+      else mock = T('m1', 50, 'Mock B: writing and speaking, timed', 'Two short texts (about 20 minutes each), then a 3 to 5 minute spoken answer.');
       B.push(habit(w));
       B.push({ name: 'Mock test', tasks: [
         mock,
         T('m2', 25, 'Review every mistake from the mock', 'Find the pattern behind each one (grammar, vocabulary, speed) and write it in the error log.')
       ] });
-      B.push({ name: 'Drill and weekly review', tasks: [
-        T('d1', 20, 'Drill your weakest skill from this week', '20 focused minutes on it, nothing else.'),
-        T('z1', 10, 'Weekly review', 'Reread the error log, cross out what you have mastered, and choose next week’s focus.')
-      ] });
+      /* checkpoint weeks have a longer mock, so no separate drill: the review decides next week's focus */
+      var wrap = [];
+      if (!CHECK[w]) wrap.push(T('d1', 20, 'Drill your weakest skill from this week', '20 focused minutes on it, nothing else.'));
+      wrap.push(T('z1', 10, 'Weekly review', 'Reread the error log, cross out what you have mastered, and choose next week’s focus.'));
+      B.push({ name: CHECK[w] ? 'Weekly review' : 'Drill and weekly review', tasks: wrap });
     }
     var total = 0, count = 0;
     B.forEach(function (b) { b.min = 0; b.tasks.forEach(function (t) { b.min += t.m; total += t.m; count++; }); });
@@ -422,7 +424,7 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
       h += '<div class="notice"><p><b>This is not your current day.</b> Your current day is ' + curLabel() + '.</p><span style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn small" data-act="gocur">Go to my current day</button><button type="button" class="btn small ghost" data-act="makecur">Make this my current day</button></span></div>';
     }
     h += '<header><div class="eyebrow">' + (isCur ? '<span class="tag">Current day</span>' : '<span class="tag alt">Viewing</span>') + '<span>Week ' + w + ' of 12</span><span>Day ' + (idx + 1) + ' of 84</span></div>' +
-      '<h1>' + DAYS[d] + '</h1><p class="sub">' + DAY_SUMMARY[d] + ' · ' + fmin(day.total) + ' in total</p>' +
+      '<h1>' + DAYS[d] + '</h1><p class="sub">' + daySummary(w, d) + ' · ' + fmin(day.total) + ' in total</p>' +
       '<div class="progress"><div class="bar"><i id="pfill"></i></div><div class="pstat"><span id="pcount"></span><span id="pleft"></span></div></div></header>' + focusHTML(w);
     day.blocks.forEach(function (b) {
       h += '<section class="block" data-block><div class="bh"><h2>' + esc(b.name) + '</h2><span class="meta"><span class="bc"></span> · ' + fmin(b.min) + '</span></div><ul class="tasks">';
@@ -467,7 +469,7 @@ details.pr pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: va
     for (var d = 0; d < 7; d++) {
       var p = dayProgress(w, d), isNow = idxOf(w, d) === S.cur, pct = Math.round(p.done * 100 / p.count);
       h += '<button type="button" class="item' + (isNow ? ' now' : '') + '" data-go="' + w + '.' + d + '"><span class="n">' + DAYS[d] + (isNow ? ' <span class="tag">Current day</span>' : '') + '</span>' +
-        '<span class="s">' + DAY_SUMMARY[d] + ' · ' + fmin(p.total) + '</span>' +
+        '<span class="s">' + daySummary(w, d) + ' · ' + fmin(p.total) + '</span>' +
         '<span class="p">' + p.done + '/' + p.count + '<i><em style="width:' + pct + '%"></em></i></span></button>';
     }
     h += '</div>';
